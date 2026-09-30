@@ -25,3 +25,7 @@ jobs:
 
       - name: run test
         run: npm run test -- --coverage
+
+  style:
+    name: Style
+    runs-on: ubunto-latest
