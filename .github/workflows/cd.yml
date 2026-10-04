@@ -36,3 +36,8 @@ jobs:
         run: |
           PROJECT_ID=$(gcloud config get-value project)
           gcloud builds submit --tag "us-central1-docker.pkg.dev/${PROJECT_ID}/notely-ar-repo/notely:latest" .
+
+      - name: Deploy to Cloud Run
+        run: |
+          PROJECT_ID=$(gcloud config get-value project)
+          gcloud run deploy notely --image "us-central1-docker.pkg.dev/${PROJECT_ID}/notely-ar-repo/notely:latest" --region us-central1 --allow-unauthenticated --project "${PROJECT_ID}" --max-instances=4
