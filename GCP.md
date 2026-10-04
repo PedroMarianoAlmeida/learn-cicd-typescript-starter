@@ -53,6 +53,33 @@ gcloud artifacts docker images list \
   "$REGION-docker.pkg.dev/$PROJECT_ID/$REPOSITORY"
 ```
 
+## Cloud Run test service
+
+Before deploying Notely, deploy the `bootdotdev/getting-started` image as a
+public test service. Open Cloud Run here:
+
+https://console.cloud.google.com/run/overview
+
+Choose **Deploy container**, then **Service**, and deploy one revision from an
+existing container image with these settings:
+
+- Container image URL: `bootdotdev/getting-started`
+- Service name: `test`
+- Region: `us-central1`
+- Authentication: Allow public access
+- Maximum instances: `4`
+- Ingress: All
+- Container port: `80`
+
+Create the service and wait for the deployment to finish. Open the service URL
+to confirm that the page loads.
+
+Use that URL when running the Boot.dev CLI tests:
+
+```sh
+bootdev config base_url "https://YOUR_TEST_SERVICE_URL/"
+```
+
 ## GitHub Actions authentication and publishing
 
 The CD workflow runs on every push to `main`. After `npm run build`, it
