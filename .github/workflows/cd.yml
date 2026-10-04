@@ -8,6 +8,8 @@ jobs:
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
 
     steps:
       - name: Check out code
@@ -36,6 +38,9 @@ jobs:
         run: |
           PROJECT_ID=$(gcloud config get-value project)
           gcloud builds submit --tag "us-central1-docker.pkg.dev/${PROJECT_ID}/notely-ar-repo/notely:latest" .
+
+      - name: Run database migrations
+        run: npm run db:migrate
 
       - name: Deploy to Cloud Run
         run: |
